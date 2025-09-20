@@ -29,7 +29,7 @@ router.post('/',upload.single('myProject'),(req,res)=>{
     let rating = 0;
     let obj = {id,name,description,filename,rating};
     Projects[id]=obj;
-    res.json({message:"added"})
+    res.json({message:"added",project : obj})
 });
 router.delete('/:id',(req,res)=>{
     let id = Number(req.params.id);
@@ -63,7 +63,7 @@ router.get('/:id',(req,res)=>{
 
 router.patch('/:id',upload.single('myProject'),(req,res)=>{
     
-    let id = Number(req.params.body);
+    let id = Number(req.params.id);
     if(isNaN(id)){
         return res.json({massage : "Not a number !"});
     }

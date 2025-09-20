@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="Style.css">
 </head>
 <body>
     <input id = "id" type="hidden">
@@ -16,7 +17,7 @@
     <label for="myProject"> Project: </label>
     <input id="myProject" type="file">
     <br>
-    <button onclick="AddOrEdit()"></button>
+    <button onclick="AddOrEdit()">AddOrEdit</button>
     <hr>
     <div id="main"></div>
     <script>
@@ -26,18 +27,17 @@
                 let data = await respone.json();
                 createGrid(data);
                 console.log(data);
-                 getData();
             }
             catch(err){
                 alert(err);
             }
-           
         }
 
         function createGrid(data){
             let txt = "";
             for(obj of data){
                 if(obj){
+                    let prjSrc = obj.filename ? `../Uploads/${obj.filename}` : 'defualt-image.png';
                     txt+= `<div class  = "ProjCard">
                         <div>
                             <img src = "../Uploads/${obj.filename}"alt = "${obj.name}">
@@ -111,8 +111,8 @@
         async function Edit(id) {
             try{
                 let name = document.getElementById('name').value;
-                let price = document.getElementById('description').value;
-                let myProject = document.getElementById('myProject').filies[0];
+                let description = document.getElementById('description').value;
+                let myProject = document.getElementById('myProject').files[0];
                 let formData = new FormData();
                 formData.append('name',name);
                 formData.append('description',description);

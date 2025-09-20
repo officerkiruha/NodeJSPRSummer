@@ -1,0 +1,29 @@
+body{
+    background-color: bisque;
+}
+#main{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 20px;
+}
+.card{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width : 100px;
+    height: 200px;
+    border: solid black 1px;
+    border-radius: 25px;
+    text-align: center;
+    background-color: aquamarine;
+}
+.card img{
+    width: 90%;
+    height: 50%;
+    margin: 10px;
+}
+#myImage{
+    width: 50px;
+    height: 50px;
+}
