@@ -19,22 +19,40 @@
     <button onclick="AddOrEdit()"></button>
     <hr>
     <div id="main"></div>
-
-
-
-
-
     <script>
         async function getData() {
             try{
                 let respone = await fetch('/projects');
                 let data = await respone.json();
+                createGrid(data);
+                console.log(data);
             }
             catch(err){
                 alert(err);
             }
             getData();
         }
+
+        function createGrid(data){
+            let txt = "";
+            for(obj of data){
+                if(obj){
+                    txt+= `<div class  = "ProjCard">
+                        <div>
+                            <img src = "../Uploads/${obj.filename}"alt = "${obj.name}">
+                            <p>${obj.name}<p>
+                                <div>${obj.description}</div>
+                                </div>
+                                <div>
+                                <button onclick="DeleteProject(${obj.id})">Delete</button>
+                                <button>Edit</button>
+                                </div>
+                                </div>`
+                }
+            }
+            document.getElementById('main').innerHTML = txt;
+        }
+        
     </script>
 </body>
 </html>
