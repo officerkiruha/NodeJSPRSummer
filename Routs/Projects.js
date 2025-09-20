@@ -58,11 +58,34 @@ router.get('/:id',(req,res)=>{
         res.status(400).json({massage : "not exsist"});
     }
     res.status(200).json({massage : project});
-})
+});
 
+router.patch('/:d',upload.single('myProject'),(req,res)=>{
+    
+    let id = Number(req.params.body);
+    if(isNaN(id)){
+        return res.json({massage : "Not a number !"});
+    }
 
-
-
+    let project = Projects[id];
+    if(!project){
+        res.status(400).json({massage :"Not exsist !"});
+    };
+    
+    let OldFileName = project.filename;
+    let NewFileName = req.file ? req.file.filename : null ;
+    if(OldFileName && NewFileName && NewFileName !== OldFileName){
+        if(fs.existsSync(path.join('Uploads',OldFileName))){
+            fs.unlinkSync(path.join('Uploads',OldFileName));
+        }
+        project.filename = NewFileName;
+    }
+    let name = req.body.name;
+    let description = req.body.description;
+    if(name) project.name = name;
+    if(description) project.description = description;
+    res.json({massage : " Updated "})
+});
 
 
 
