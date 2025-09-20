@@ -47,3 +47,23 @@ router.delete('/:id',(req,res)=>{
     }
     res.status(200).json({massage : "deleted "});
 })
+
+router.get('/:id',(req,res)=>{
+    let id = Number(req.params.id);
+    if(isNaN(id)){
+        return res.json({massage : "Not a Number !"})
+    }
+    let project = Projects[id];
+    if(!project){
+        res.status(400).json({massage : "not exsist"});
+    }
+    res.status(200).json({massage : project});
+})
+
+
+
+
+
+
+
+module.exports = router;
