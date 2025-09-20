@@ -81,6 +81,18 @@
             document.getElementById('description').value="";
             document.getElementById('myProject').value="";
         }
+        async function DeleteProject(id) {
+            try{
+                if(confirm('are you sure you want to delete is ?')){
+                    await fetch(`/projects/${id}`,{
+                        method : 'DELETE'
+                    })
+                }
+                getData();
+            }catch(err){
+                alert(err);
+            }
+        }
 
     </script>
 </body>
