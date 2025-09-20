@@ -93,7 +93,20 @@
                 alert(err);
             }
         }
-
+        async function gettingByid(id) {
+            try{
+                let respone = await fetch(`/projects/${id}`);
+                let obj = await respone.json();
+                document.getElementById('id').value=obj.id;
+                document.getElementById('name').value=obj.name;
+             document.getElementById('description').value=obj.description
+                document.getElementById('myProject').src="../Uploads"+obj.filename;
+            }
+            catch(err){
+                alert(err);
+            }
+            
+        }
     </script>
 </body>
 </html>
