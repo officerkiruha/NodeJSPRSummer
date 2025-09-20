@@ -128,6 +128,17 @@
                 alert(err);
             }
         }
+
+        function AddOrEdit(){
+            let id = document.getElementById('id').value;
+            if(id){
+                Edit(id);
+            }
+            else{
+                addProject();
+            }
+        }
+        getData();
     </script>
 </body>
 </html>
