@@ -30,5 +30,20 @@ router.post('/',upload.single('myProject'),(req,res)=>{
     Projects[id]=obj;
     res.json({message:"added"})
 });
-
-s
+router.delete('/:id',(req,res)=>{
+    let id = Number(req.params.id);
+    if(isNaN(id)){
+        return res.json({massage : "Not a Number !"})
+    }
+    let project = Projects[id];
+    if(!project){
+        res.status(400).json({massage:" not exsist "});
+    }
+    Projects[id]=null;
+    if(project.filename){
+        if(fs.existsSync(path.join('Uploads',project.filename))){
+            fs.unlinkSync(path.join('Uploads',project.filename));
+        }
+    }
+    res.status(200).json({massage : "deleted "});
+})
