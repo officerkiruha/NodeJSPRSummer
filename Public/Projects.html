@@ -26,11 +26,12 @@
                 let data = await respone.json();
                 createGrid(data);
                 console.log(data);
+                 getData();
             }
             catch(err){
                 alert(err);
             }
-            getData();
+           
         }
 
         function createGrid(data){
@@ -56,7 +57,7 @@
             try{
                 let name = document.getElementById('name').value;
                 let description = document.getElementById('description').value;
-                let myProject = document.getElementById('myProject').files[0];
+                let myProject = document.getElementById('myProject');
                 let preview = myProject.files.length > 0 ? myProject.files[0]: null;
 
                 let formData = new FormData();

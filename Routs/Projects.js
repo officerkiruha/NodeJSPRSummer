@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const fs = require('fs');
+const path = require('path');
 let nextID = 1;
 let Projects = [];
 
@@ -60,7 +61,7 @@ router.get('/:id',(req,res)=>{
     res.status(200).json({massage : project});
 });
 
-router.patch('/:d',upload.single('myProject'),(req,res)=>{
+router.patch('/:id',upload.single('myProject'),(req,res)=>{
     
     let id = Number(req.params.body);
     if(isNaN(id)){
