@@ -34,11 +34,11 @@ router.post('/',upload.single('myProject'),(req,res)=>{
 router.delete('/:id',(req,res)=>{
     let id = Number(req.params.id);
     if(isNaN(id)){
-        return res.json({massage : "Not a Number !"})
+        return res.json({message : "Not a Number !"})
     }
     let project = Projects[id];
     if(!project){
-        res.status(400).json({massage:" not exsist "});
+        res.status(400).json({message:" not exsist "});
     }
     Projects[id]=null;
     if(project.filename){
@@ -46,31 +46,31 @@ router.delete('/:id',(req,res)=>{
             fs.unlinkSync(path.join('Uploads',project.filename));
         }
     }
-    res.status(200).json({massage : "deleted "});
+    res.status(200).json({message : "deleted "});
 })
 
 router.get('/:id',(req,res)=>{
     let id = Number(req.params.id);
     if(isNaN(id)){
-        return res.json({massage : "Not a Number !"})
+        return res.json({message : "Not a Number !"})
     }
     let project = Projects[id];
     if(!project){
-        res.status(400).json({massage : "not exsist"});
+        res.status(400).json({message : "not exsist"});
     }
-    res.status(200).json({massage : project});
+    res.status(200).json(project);
 });
 
 router.patch('/:id',upload.single('myProject'),(req,res)=>{
     
     let id = Number(req.params.id);
     if(isNaN(id)){
-        return res.json({massage : "Not a number !"});
+        return res.json({message : "Not a Number !"})
     }
 
     let project = Projects[id];
     if(!project){
-        res.status(400).json({massage :"Not exsist !"});
+        res.status(400).json({message :"Not exsist !"});
     };
     
     let OldFileName = project.filename;
@@ -85,7 +85,7 @@ router.patch('/:id',upload.single('myProject'),(req,res)=>{
     let description = req.body.description;
     if(name) project.name = name;
     if(description) project.description = description;
-    res.json({massage : " Updated "})
+    res.json({message : " Updated "})
 });
 
 

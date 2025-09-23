@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Details</title>
+    <link rel="stylesheet" href="Style.css">
+</head>
+<body>
+    <div id="project-container">
+        <h1 id="project-name"></h1>
+        <img id="project-image" src="" alt="" style="max-width:500px; width:100%;">
+        <p id="project-description"></p>
+        <div>
+            <label for="rating">Rating:</label>
+            <select id="rating">
+                <option value="1">1⭐</option>
+                <option value="2">2⭐⭐</option>
+                <option value="3">3⭐⭐⭐</option>
+                <option value="4">4⭐⭐⭐⭐</option>
+                <option value="5">5⭐⭐⭐⭐⭐</option>
+            </select>
+            <button onclick="submitRating()">Submit</button>
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const projectId = urlParams.get('id');
+
+        async function loadProject() {
+            try {
+                let resp = await fetch(`/projects/${projectId}`);
+                let project = await resp.json();
+                document.getElementById('project-name').innerText = project.name;
+                document.getElementById('project-description').innerText = project.description;
+                document.getElementById('project-image').src = project.filename ? `/Uploads/${project.filename}` : '/default-image.png';
+            } catch(err) {
+                alert('Error loading project');
+            }
+        }
+
+        async function submitRating() {
+            try {
+                let rating = document.getElementById('rating').value;
+                await fetch(`/projects/${projectId}`, {
+                    method: 'PATCH',
+                    body: JSON.stringify({ rating: Number(rating) }),
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                alert('Rating submitted!');
+            } catch(err) {
+                alert('Error submitting rating');
+            }
+        }
+        loadProject();
+    </script>
+</body>
+</html>

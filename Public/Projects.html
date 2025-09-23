@@ -37,16 +37,18 @@
             let txt = "";
             for(obj of data){
                 if(obj){
-                    let prjSrc = obj.filename ? `../Uploads/${obj.filename}` : 'defualt-image.png';
+                    let prjSrc = obj.filename ? `/Uploads/${obj.filename}` : 'defualt-image.png';
                     txt+= `<div class  = "ProjCard">
                         <div>
-                            <img src = "../Uploads/${obj.filename}"alt = "${obj.name}">
-                            <p>${obj.name}<p>
+                            <img src = "/Uploads/${obj.filename}"alt = "${obj.name}">
+                            <p>${obj.name}</p>
                                 <div>${obj.description}</div>
                                 </div>
                                 <div>
+                                    <div>Rating: ${obj.rating || 0} ⭐</div>
                                 <button onclick="DeleteProject(${obj.id})">Delete</button>
-                                <button>Edit</button>
+                                <button onclick="gettingByid(${obj.id})">Edit</button>
+                                <button onclick="showProject(${obj.id})">Show Project</button>
                                 </div>
                                 </div>`
                 }
@@ -63,8 +65,8 @@
                 let formData = new FormData();
                 formData.append('name',name);
                 formData.append('description',description);
-                if(myProject){
-                    formData.append('myProject',myProject);
+                if(preview){
+                    formData.append('myProject',preview);
                 }
                 await fetch('/projects',{
                     method: 'POST',
@@ -100,8 +102,7 @@
                 let obj = await respone.json();
                 document.getElementById('id').value=obj.id;
                 document.getElementById('name').value=obj.name;
-             document.getElementById('description').value=obj.description
-                document.getElementById('myProject').src="../Uploads"+obj.filename;
+             document.getElementById('description').value=obj.description;
             }
             catch(err){
                 alert(err);
@@ -139,6 +140,10 @@
                 addProject();
             }
         }
+         function showProject(id){
+         window.open(`ShowProject.html?id=${id}`, '_blank');
+        }
+
         getData();
     </script>
 </body>
