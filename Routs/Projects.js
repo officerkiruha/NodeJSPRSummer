@@ -85,6 +85,8 @@ router.patch('/:id',upload.single('myProject'),(req,res)=>{
     let description = req.body.description;
     if(name) project.name = name;
     if(description) project.description = description;
+
+    if(req.body.rating) project.rating = req.body.rating;
     res.json({message : " Updated "})
 });
 
