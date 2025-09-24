@@ -34,6 +34,9 @@ router.post('/',upload.single('myProject'),(req,res)=>{
     let description = req.body.description;
     let filename = req.file ? req.file.filename:null;
     let rating = 0;
+     if (!name || !description) {
+        return res.status(400).json({message: "Name and description are required"});
+    }
     let obj = {id,name,description,filename,rating: []};
     Projects[id]=obj;
     res.json({message:"added",project : obj})
@@ -45,7 +48,7 @@ router.delete('/:id',(req,res)=>{
     }
     let project = Projects[id];
     if(!project){
-        res.status(400).json({message:" not exsist "});
+        res.status(400).json({message:" not exist "});
     }
     Projects[id]=null;
     if(project.filename){
@@ -63,7 +66,7 @@ router.get('/:id',(req,res)=>{
     }
     let project = Projects[id];
     if(!project){
-        res.status(400).json({message : "not exsist"});
+        res.status(400).json({message : "not exist"});
     }
     res.status(200).json(project);
 });
@@ -77,7 +80,7 @@ router.patch('/:id',upload.single('myProject'),(req,res)=>{
 
     let project = Projects[id];
     if(!project){
-        res.status(400).json({message :"Not exsist !"});
+        res.status(400).json({message :"Not exist !"});
     };
     
     let OldFileName = project.filename;
