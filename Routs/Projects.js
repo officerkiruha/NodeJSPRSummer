@@ -19,7 +19,14 @@ const storage = multer.diskStorage({
 const upload = multer({storage:storage});
 
 router.get('/',(req,res)=>{
-    res.json(Projects)
+    let result = Projects.filter(Boolean).map(project => {
+        let average = project.rating && project.rating.length 
+        ? project.rating.reduce((a,b)=>a+b,0)/project.rating.length : 0;
+        return {
+            ...project,average
+        }
+    })
+    res.json(result)
 });
 router.post('/',upload.single('myProject'),(req,res)=>{
     let id = nextID++;
@@ -27,7 +34,7 @@ router.post('/',upload.single('myProject'),(req,res)=>{
     let description = req.body.description;
     let filename = req.file ? req.file.filename:null;
     let rating = 0;
-    let obj = {id,name,description,filename,rating};
+    let obj = {id,name,description,filename,rating: []};
     Projects[id]=obj;
     res.json({message:"added",project : obj})
 });
@@ -86,7 +93,12 @@ router.patch('/:id',upload.single('myProject'),(req,res)=>{
     if(name) project.name = name;
     if(description) project.description = description;
 
-    if(req.body.rating) project.rating = req.body.rating;
+    if(req.body.rating) {
+        if(!project.rating) project.rating = [];
+        project.rating.push(Number(req.body.rating)); 
+    }
+
+
     res.json({message : " Updated "})
 });
 
