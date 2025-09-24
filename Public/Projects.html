@@ -68,10 +68,17 @@
                 if(preview){
                     formData.append('myProject',preview);
                 }
-                await fetch('/projects',{
+               let response = await fetch('/projects',{
                     method: 'POST',
                     body: formData
-                })
+                });
+                if(!response.ok){
+                    alert("Error: "+"You need to write Name and Description and upload Project !!");
+                    alert("Error : "+err.message);
+                    return;
+                }
+                let data = await response.json();
+                alert("Project added successfully!");
                 getData();
                 clearInputs();
             }

@@ -32,11 +32,11 @@ router.post('/',upload.single('myProject'),(req,res)=>{
     let id = nextID++;
     let name = req.body.name;
     let description = req.body.description;
-    let filename = req.file ? req.file.filename:null;
-    let rating = 0;
-     if (!name || !description) {
+     if (name=="" || description=="") {
         return res.status(400).json({message: "Name and description are required"});
     }
+    let filename = req.file ? req.file.filename:null;
+    let rating = 0;
     let obj = {id,name,description,filename,rating: []};
     Projects[id]=obj;
     res.json({message:"added",project : obj})
