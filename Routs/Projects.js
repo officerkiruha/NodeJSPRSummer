@@ -37,7 +37,7 @@ router.post('/',upload.single('myProject'),(req,res)=>{
     }
     let filename = req.file ? req.file.filename:null;
     let rating = 0;
-    let obj = {id,name,description,filename,rating: []};
+    let obj = {id,name,description,filename,rating: [],voters: [] };
     Projects[id]=obj;
     res.json({message:"added",project : obj})
 });
@@ -98,7 +98,12 @@ router.patch('/:id',upload.single('myProject'),(req,res)=>{
 
     if(req.body.rating) {
         if(!project.rating) project.rating = [];
-        project.rating.push(Number(req.body.rating)); 
+        let userIp = req.ip;
+        if(project.voters.includes(userIp)){
+            return res.status(400).json({message : "you already vote :-)"})
+        }
+         project.voters.push(userIp);
+         project.rating.push(Number(req.body.rating)); 
     }
 
 

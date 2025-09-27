@@ -46,11 +46,16 @@
         async function submitRating() {
             try {
                 let rating = document.getElementById('rating').value;
-                await fetch(`/projects/${projectId}`, {
+                let response= await fetch(`/projects/${projectId}`, {
                     method: 'PATCH',
                     body: JSON.stringify({ rating: Number(rating) }),
                     headers: { 'Content-Type': 'application/json' }
                 });
+                let result = await response.json();
+                if(!response.ok){
+                    alert(result.message);
+                    return;
+                }
                 alert('Rating submitted!');
             } catch(err) {
                 alert('Error submitting rating');
