@@ -17,7 +17,11 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({storage:storage});
-
+//פה זה השליפה של כל פרויקטים אבל הוא שונה מהרגיל 
+//רציתי להראות כאן את התצוגת ממוצע של הכוכבים אז הכנסתי את זה 
+//לGET
+//בשביל להראות אם כמה אנשים מצביעים 3 כוכבים וכמה 5 זה יתן ממומצע של 4 למשל 
+//כן השתמשתי בCHATGPT כי לא ידעתי את הנוסחאות המתאימה לזה 
 router.get('/',(req,res)=>{
     let result = Projects.filter(Boolean).map(project => {
         let average = project.rating && project.rating.length 
